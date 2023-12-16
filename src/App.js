@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Searching from './components/Searching';
+import Filter from './components/Filter';
 import './App.css';
 import ReactPaginate from 'react-paginate';
 
@@ -33,8 +35,8 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const fetchMovie = async () => {
-    console.log(movie);
-    fetch('https://api.themoviedb.org/3/discover/movie?api_key=27bd4dad0754c77391111e35f827bd6a')
+
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=27bd4dad0754c77391111e35f827bd6a&page=7`)
       .then(response => response.json())
       .then(json => setMovie(json.results))
   }
@@ -43,10 +45,6 @@ function App() {
   }, [])
   const handleOpenModal = () => {
     setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
   };
 
   const search = async (q) => {
@@ -107,39 +105,7 @@ function App() {
   }
   return (
     <>
-      <form
-        action=""
-        className="search-bar"
-        style={{ display: showForm ? '' : 'none' }}
-        onSubmit={(e) => {
-          e.preventDefault();
-          const searchValue = e.target.querySelector('.MovieSearch').value;
-          search(searchValue);
-        }}
-      >
-        <input
-          placeholder='Enter Film..'
-          className='MovieSearch'
-        />
-        <button className="search-btn" type="submit">
-          <span>Search</span>
-        </button>
-        <div className='container-category'>
-          <input className="dark-light" type="checkbox" id="dark-light" name="dark-light" />
-
-          <div className="light-back"></div>
-
-          <div className="sec-center">
-            <input className="dropdown" type="checkbox" id="dropdown" name="dropdown" />
-            <label className="for-dropdown" htmlFor="dropdown">Filter By<i className="uil uil-arrow-down"></i></label>
-            <div className="section-dropdown">
-              <a>Rating Tertinggi<i className="uil uil-arrow-right"></i></a>
-              <a>Popular<i className="uil uil-arrow-right"></i></a>
-              <a>Upcoming<i className="uil uil-arrow-right"></i></a>
-            </div>
-          </div>
-        </div>
-      </form>
+      <Searching showForm={showForm} search={search} />
 
       <>
         {selectedMovie !== null ? (
@@ -212,6 +178,7 @@ function App() {
         ) : (
 
           <div className="card-container">
+            <Filter setMovie={setMovie} />
             {/* Tampilkan daftar gambar */}
             {movie.map((val, index) => (
               <div className="card" key={index}>

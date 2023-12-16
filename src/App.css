@@ -80,6 +80,7 @@ li {
 .container-category {
   position: absolute;
   float: left;
+  top: 26px;
   left: 6%;
   z-index: 200;
 }
