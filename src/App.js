@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Searching from './components/Searching';
 import Filter from './components/Filter';
+import RatingStars from './components/RatingStars';
 import './App.css';
 import ReactPaginate from 'react-paginate';
 
@@ -22,7 +23,7 @@ const Modal = ({ isOpen, onClose, children }) => {
   );
 };
 
-function App() {
+function App({ title, rating }) {
   const [movie, setMovie] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showPrevious, setShowPrevious] = useState(false);
@@ -120,7 +121,7 @@ function App() {
                 <p>Release Date : {selectedMovie.release_date}</p>
                 <p>Duration: {(selectedMovie.runtime - (selectedMovie.runtime % 60)) / 60} Jam {selectedMovie.runtime % 60} Menit</p>
                 <p>Status: {selectedMovie.status}</p>
-                <p>Rating: {selectedMovie.vote_average}</p>
+                <RatingStars rating={selectedMovie.vote_average} />
                 <button className='button-5' onClick={refreshPage}>Kembali</button>
 
                 {comments.length > 0 && (

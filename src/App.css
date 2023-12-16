@@ -7,6 +7,21 @@ body, .search-bar {
 body {
 	background: #f1f1f1;
 }
+.rating-stars {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.rating-stars span {
+  font-size: 20px;
+  color: #ffd700; /* Warna kuning emas untuk bintang diisi */
+}
+
+.rating-stars span.empty {
+  color: #ccc; /* Warna abu-abu untuk bintang yang tidak diisi */
+}
 ul {
   list-style-type: none; /* Remove bullets */
   padding: 0; /* Remove padding */
