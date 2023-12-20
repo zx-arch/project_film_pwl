@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import ReactPaginate from 'react-paginate';
+import Searching from './components/Searching';
+import Filter from './components/Filter';
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) {
@@ -129,44 +131,15 @@ function App() {
   }
 
   const refreshPage = async () => {
+    //localStorage.removeItem('movieRatings');
+
     localStorage.setItem('movieRatings', JSON.stringify(movieRatings));
     window.location = document.referrer;
   };
   return (
     <>
-      <form
-        action=""
-        className="search-bar"
-        style={{ display: showForm ? '' : 'none' }}
-        onSubmit={(e) => {
-          e.preventDefault();
-          const searchValue = e.target.querySelector('.MovieSearch').value;
-          search(searchValue);
-        }}
-      >
-        <input
-          placeholder='Enter Film..'
-          className='MovieSearch'
-        />
-        <button className="search-btn" type="submit">
-          <span>Search</span>
-        </button>
-        <div className='container-category'>
-          <input className="dark-light" type="checkbox" id="dark-light" name="dark-light" />
+      <Searching showForm={showForm} search={search} />
 
-          <div className="light-back"></div>
-
-          <div className="sec-center">
-            <input className="dropdown" type="checkbox" id="dropdown" name="dropdown" />
-            <label className="for-dropdown" htmlFor="dropdown">Filter By<i className="uil uil-arrow-down"></i></label>
-            <div className="section-dropdown">
-              <a>Rating Tertinggi<i className="uil uil-arrow-right"></i></a>
-              <a>Popular<i className="uil uil-arrow-right"></i></a>
-              <a>Upcoming<i className="uil uil-arrow-right"></i></a>
-            </div>
-          </div>
-        </div>
-      </form>
 
       <>
         {selectedMovie !== null ? (
@@ -251,6 +224,7 @@ function App() {
         ) : (
 
           <div className="card-container">
+            <Filter setMovie={setMovie} />
             {/* Tampilkan daftar gambar */}
             {movie.map((val, index) => (
               <div className="card" key={index}>
